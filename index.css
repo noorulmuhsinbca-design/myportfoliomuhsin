@@ -1403,12 +1403,29 @@ body.sunny-theme .theme-toggle .fa-moon {
 }
 
 @media (max-width: 768px) {
+
+    /* ── Base ── */
+    .container {
+        padding: 0 20px;
+    }
+
+    .section {
+        padding: 70px 0;
+    }
+
+    /* ── Cursor: hide on touch devices ── */
+    .cursor,
+    .cursor-follower {
+        display: none;
+    }
+
+    /* ── Navbar ── */
     .navbar {
-        padding: 16px 24px;
+        padding: 14px 20px;
     }
 
     .navbar.scrolled {
-        padding: 12px 24px;
+        padding: 10px 20px;
     }
 
     .nav-links,
@@ -1416,39 +1433,82 @@ body.sunny-theme .theme-toggle .fa-moon {
         display: none;
     }
 
+    .theme-toggle {
+        width: 38px;
+        height: 38px;
+        margin-right: 12px;
+    }
+
     .hamburger {
         display: flex;
     }
 
+    /* ── Hero ── */
     .hero {
         grid-template-columns: 1fr;
-        padding: 100px 24px 60px;
+        min-height: 100svh;
+        padding: 90px 20px 50px;
         text-align: center;
+        gap: 24px;
     }
 
     .hero-inner {
+        order: 2;
         align-items: center;
+        width: 100%;
+        gap: 16px;
+    }
+
+    .hero-visual {
+        order: 1;
+        margin-bottom: 0;
+    }
+
+    .hero-title {
+        font-size: 2.4rem;
+        line-height: 1.15;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    /* Restore line breaks for natural stacking */
+    .hero-title br {
+        display: block;
     }
 
     .hero-sub {
-        text-align: center;
+        font-size: 0.95rem;
+        max-width: 100%;
+        margin-bottom: 0;
     }
 
     .hero-actions {
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
         justify-content: center;
+        max-width: 320px;
     }
 
     .hero-stats {
         justify-content: center;
+        gap: 20px;
+        padding-top: 8px;
     }
 
-    .hero-visual {
-        order: -1;
+    .stat-num {
+        font-size: 1.4rem;
     }
 
+    /* ── Profile image ── */
     .profile-ring {
-        width: 240px;
-        height: 240px;
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
     }
 
     .float-card {
@@ -1459,6 +1519,7 @@ body.sunny-theme .theme-toggle .fa-moon {
         display: none;
     }
 
+    /* ── Projects ── */
     .projects-grid {
         grid-template-columns: 1fr;
     }
@@ -1467,6 +1528,7 @@ body.sunny-theme .theme-toggle .fa-moon {
         grid-column: auto;
     }
 
+    /* ── Skills ── */
     .skills-bento {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1479,38 +1541,77 @@ body.sunny-theme .theme-toggle .fa-moon {
         grid-row: auto;
     }
 
+    /* ── Contact ── */
     .contact-wrap {
-        padding: 40px 24px;
+        padding: 36px 20px;
     }
 
     .form-row {
         grid-template-columns: 1fr;
     }
 
+    /* ── Footer ── */
     .footer-inner {
         flex-direction: column;
         gap: 16px;
         text-align: center;
     }
 
-    .section {
-        padding: 80px 0;
+    /* ── About ── */
+    .about-grid {
+        grid-template-columns: 1fr;
     }
-}
 
-@media (max-width: 480px) {
-    .hero-title {
-        font-size: 2.4rem;
+    .about-left {
+        margin: 0 auto;
+        max-width: 280px;
     }
 
     .section-title {
-        font-size: 1.8rem;
+        font-size: 2rem;
+    }
+}
+
+/* ── Small phones (≤480px) ── */
+@media (max-width: 480px) {
+    .hero {
+        padding: 80px 16px 40px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-title em {
+        font-size: 2rem;
+    }
+
+    .profile-ring {
+        width: 170px;
+        height: 170px;
+    }
+
+    .section-title {
+        font-size: 1.7rem;
     }
 
     .skills-bento {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat-num {
+        font-size: 1.2rem;
+    }
+
+    .hero-stats {
+        gap: 14px;
+    }
+
+    .stat-label {
+        font-size: 0.72rem;
     }
 }
+
 
 /* ─── SUNNY ANIMATIONS ───────────────────────── */
 .sun-rays {
