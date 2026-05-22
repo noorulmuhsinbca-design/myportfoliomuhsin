@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardian Pharmacy | Your Health, Delivered Fast</title>
+    <link rel="stylesheet" href="guardian.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">GP</div>
+                <span class="logo-text">Guardian <span>Pharmacy</span></span>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="active">HOME</a>
+                <a href="#medicines">MEDICINES</a>
+                <a href="#categories">CATEGORIES</a>
+                <a href="#doctors">DOCTORS</a>
+                <a href="#lab-tests">LAB TESTS</a>
+                <a href="#physiotherapy">PHYSIOTHERAPY</a>
+            </div>
+            <div class="nav-user">
+                <div class="user-badge">
+                    <i class="far fa-user"></i>
+                    <span>noorul</span>
+                </div>
+                <button class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="rating-badge">
+                        <i class="fas fa-star"></i>
+                        <span>4.89 Google Rating · Trusted by 10,000+ customers</span>
+                    </div>
+                    <h1>Your Health,<br><span class="accent">Delivered Fast.</span></h1>
+                    <p>Authentic medicines, expert doctors & lab tests — all at your fingertips. Guardian Pharmacy delivers care right to your door.</p>
+                    
+                    <div class="hero-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-link"></i> Order Medicines
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-stethoscope"></i> Book Appointment
+                        </button>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">10K+</span>
+                            <span class="stat-label">Happy Customers</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-value">500+</span>
+                            <span class="stat-label">Medicines</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-value">4.89★</span>
+                            <span class="stat-label">Google Rating</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-images">
+                    <div class="main-img-frame">
+                        <img src="pharmacy_storefront.png" alt="Guardian Pharmacy Storefront">
+                        <div class="floating-pill">
+                            <div class="pill-icon">🚚</div>
+                            <div class="pill-text">
+                                <strong>Free Delivery</strong>
+                                <span>On orders above ₹500</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-images">
+                        <div class="sub-img-frame">
+                            <img src="pharmacy_storefront.png" alt="Pharmacy Interior">
+                        </div>
+                        <div class="sub-img-frame">
+                            <img src="pharmacy_storefront.png" alt="Pharmacy Night View">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section id="categories" class="categories">
+            <div class="section-header">
+                <h2>Categories</h2>
+                <p>Quality healthcare products across all essential categories.</p>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search medicines...">
+                </div>
+            </div>
+
+            <div class="category-slider">
+                <div class="category-item active">
+                    <div class="cat-icon"><img src="medical_category_icons.png" alt="All"></div>
+                    <span>All</span>
+                </div>
+                <div class="category-item">
+                    <div class="cat-icon"><img src="medical_category_icons.png" alt="Medicines"></div>
+                    <span>Medicines</span>
+                </div>
+                <div class="category-item">
+                    <div class="cat-icon"><img src="medical_category_icons.png" alt="Baby Care"></div>
+                    <span>Baby Care</span>
+                </div>
+                <div class="category-item">
+                    <div class="cat-icon"><img src="medical_category_icons.png" alt="Derma Care"></div>
+                    <span>Derma Care</span>
+                </div>
+                <div class="category-item">
+                    <div class="cat-icon"><img src="medical_category_icons.png" alt="Pain Relief"></div>
+                    <span>Pain Relief</span>
+                </div>
+                <div class="category-item">
+                    <div class="cat-icon"><img src="medical_category_icons.png" alt="Ortho"></div>
+                    <span>Ortho & Surgical</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Doctors Section -->
+        <section id="doctors" class="doctors">
+            <div class="experts-banner">
+                <h3>Meet Our <span class="highlight">Medical Experts</span></h3>
+                <p>Click <strong>Book Appointment</strong> to schedule a consultation with our specialists.</p>
+                <button class="btn btn-token">
+                    <span class="token-icon">#</span>
+                    <div class="token-text">
+                        <strong>CHECK LIVE TOKEN STATUS</strong>
+                        <span>TAP HERE <i class="fas fa-crosshairs"></i></span>
+                    </div>
+                </button>
+            </div>
+
+            <div class="experts-grid">
+                <div class="expert-card">
+                    <div class="expert-img">
+                        <img src="medical_experts_retry.png" alt="Dr. John Doe">
+                    </div>
+                    <div class="expert-info">
+                        <h4>Dr. John Doe</h4>
+                        <span>General Physician</span>
+                        <div class="status-badge available">
+                            <i class="fas fa-users"></i> 3 Specialists Available
+                        </div>
+                    </div>
+                </div>
+                <div class="expert-card">
+                    <div class="expert-img">
+                        <img src="medical_experts_retry.png" alt="Dr. Jane Smith">
+                    </div>
+                    <div class="expert-info">
+                        <h4>Dr. Jane Smith</h4>
+                        <span>Pediatrician</span>
+                        <div class="status-badge available">
+                            <i class="fas fa-users"></i> Available Now
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating Contact -->
+    <a href="#" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="guardian.js"></script>
+</body>
+</html>
