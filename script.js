@@ -12,23 +12,26 @@ window.addEventListener('load', () => {
 // ─── CUSTOM CURSOR ──────────────────────────────
 const cursor = document.getElementById('cursor');
 const cursorFollower = document.getElementById('cursorFollower');
-let mouseX = 0, mouseY = 0;
-let fx = 0, fy = 0;
 
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursor.style.left = mouseX + 'px';
-    cursor.style.top = mouseY + 'px';
-});
+if (cursor && cursorFollower && window.matchMedia('(pointer: fine)').matches) {
+    let mouseX = 0, mouseY = 0;
+    let fx = 0, fy = 0;
 
-(function animateFollower() {
-    fx += (mouseX - fx) * 0.1;
-    fy += (mouseY - fy) * 0.1;
-    cursorFollower.style.left = fx + 'px';
-    cursorFollower.style.top = fy + 'px';
-    requestAnimationFrame(animateFollower);
-})();
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top = mouseY + 'px';
+    });
+
+    (function animateFollower() {
+        fx += (mouseX - fx) * 0.1;
+        fy += (mouseY - fy) * 0.1;
+        cursorFollower.style.left = fx + 'px';
+        cursorFollower.style.top = fy + 'px';
+        requestAnimationFrame(animateFollower);
+    })();
+}
 
 // ─── THEME TOGGLE ──────────────────────────────
 const themeToggle = document.getElementById('themeToggle');
@@ -147,6 +150,9 @@ form?.addEventListener('submit', (e) => {
     messages.unshift(data);
     localStorage.setItem('messages', JSON.stringify(messages));
 
+    // Manually trigger storage event for same-page listeners (if admin is open in another tab)
+    window.dispatchEvent(new Event('storage'));
+
     setTimeout(() => {
         span.textContent = 'Message Sent!';
         icon.className = 'fas fa-check';
@@ -210,3 +216,16 @@ if (hireMeBtn) {
         hireMeBtn.style.transform = '';
     });
 }
+
+// ─── VISITOR COUNTER ────────────────────────────
+(async function trackVisitors() {
+    // Only count unique visits per session
+    if (!sessionStorage.getItem('pageVisited')) {
+        try {
+            await fetch('https://api.counterapi.dev/v1/noorulmuhsin/portfolio/up');
+            sessionStorage.setItem('pageVisited', 'true');
+        } catch (err) {
+            console.error('Counter error:', err);
+        }
+    }
+})();

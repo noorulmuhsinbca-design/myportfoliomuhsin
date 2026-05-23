@@ -74,7 +74,15 @@
                             <i class="fas fa-eye"></i>
                         </div>
                     </div>
-                    <div class="stat-val">2.4k</div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                        <div class="stat-val" id="total-visitors">2,345</div>
+                        <span
+                            style="font-size: 0.7rem; color: #22c55e; margin-bottom: 5px; display: flex; align-items: center; gap: 4px;">
+                            <span
+                                style="width: 6px; height: 6px; background: #22c55e; border-radius: 50%; display: inline-block; animation: pulse 2s infinite;"></span>
+                            Live
+                        </span>
+                    </div>
                     <div class="stat-label">Total Visitors</div>
                 </div>
                 <div class="stat-card" style="animation-delay: 0.2s">
@@ -83,7 +91,7 @@
                             <i class="fas fa-envelope"></i>
                         </div>
                     </div>
-                    <div class="stat-val">12</div>
+                    <div class="stat-val" id="new-messages-count">0</div>
                     <div class="stat-label">New Messages</div>
                 </div>
                 <div class="stat-card" style="animation-delay: 0.3s">
@@ -130,7 +138,7 @@
                     <div class="stat-label">Total Published</div>
                 </div>
                 <div class="stat-card">
-                    <button class="btn-primary" style="padding: 10px; font-size: 0.9rem;">
+                    <button class="btn-primary" id="addProjectBtn" style="padding: 10px; font-size: 0.9rem;">
                         <i class="fas fa-plus"></i> Add New Project
                     </button>
                 </div>
@@ -225,6 +233,40 @@
             </div>
         </div>
     </main>
+
+    <!-- ─── MODAL ────────────────────────────────── -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Project</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <form id="projectForm">
+                <input type="hidden" id="projectId">
+                <div class="form-group-admin">
+                    <label>Project Name</label>
+                    <input type="text" id="projectName" placeholder="e.g. Portfolio Website" required>
+                </div>
+                <div class="form-group-admin">
+                    <label>Description</label>
+                    <textarea id="projectDesc" rows="3" placeholder="Brief description..." required></textarea>
+                </div>
+                <div class="form-group-admin">
+                    <label>Image URL</label>
+                    <input type="text" id="projectImg" placeholder="assets/project1.webp" required>
+                </div>
+                <div class="form-group-admin">
+                    <label>Live Link</label>
+                    <input type="url" id="projectLink" placeholder="https://..." required>
+                </div>
+                <div class="form-group-admin">
+                    <label>Tags (comma separated)</label>
+                    <input type="text" id="projectTags" placeholder="React, Node.js, CSS">
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">Save Project</button>
+            </form>
+        </div>
+    </div>
 
     <script src="admin.js"></script>
 </body>

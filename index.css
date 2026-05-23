@@ -77,7 +77,12 @@ body {
     background: var(--bg);
     color: var(--text);
     overflow-x: hidden;
-    cursor: none;
+}
+
+@media (pointer: fine) {
+    body {
+        cursor: none;
+    }
 }
 
 img {
@@ -120,42 +125,57 @@ ul {
 }
 
 /* ─── CURSOR ───────────────────────────────────────────────────────────── */
-.cursor {
-    width: 10px;
-    height: 10px;
-    background: var(--accent2);
-    border-radius: 50%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform .1s, width .25s, height .25s, background .25s;
+@media (pointer: fine) {
+    .cursor {
+        width: 10px;
+        height: 10px;
+        background: var(--accent2);
+        border-radius: 50%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: transform .1s, width .25s, height .25s, background .25s;
+    }
+
+    .cursor-follower {
+        width: 36px;
+        height: 36px;
+        border: 1.5px solid rgba(124, 58, 237, .6);
+        border-radius: 50%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: transform .18s ease, width .25s, height .25s, opacity .25s;
+    }
+
+    body:has(a:hover, button:hover) .cursor {
+        width: 20px;
+        height: 20px;
+        background: var(--accent3);
+    }
+
+    body:has(a:hover, button:hover) .cursor-follower {
+        opacity: 0;
+    }
 }
 
-.cursor-follower {
-    width: 36px;
-    height: 36px;
-    border: 1.5px solid rgba(124, 58, 237, .6);
-    border-radius: 50%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: transform .18s ease, width .25s, height .25s, opacity .25s;
-}
+@media (pointer: coarse),
+(max-width: 768px) {
 
-body:has(a:hover, button:hover) .cursor {
-    width: 20px;
-    height: 20px;
-    background: var(--accent3);
-}
+    .cursor,
+    .cursor-follower {
+        display: none !important;
+    }
 
-body:has(a:hover, button:hover) .cursor-follower {
-    opacity: 0;
+    body {
+        cursor: auto !important;
+    }
 }
 
 /* ─── LOADER ───────────────────────────────────────────────────────────── */
@@ -1411,12 +1431,6 @@ body.sunny-theme .theme-toggle .fa-moon {
 
     .section {
         padding: 70px 0;
-    }
-
-    /* ── Cursor: hide on touch devices ── */
-    .cursor,
-    .cursor-follower {
-        display: none;
     }
 
     /* ── Navbar ── */
