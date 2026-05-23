@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 
@@ -74,15 +75,7 @@
                             <i class="fas fa-eye"></i>
                         </div>
                     </div>
-                    <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                        <div class="stat-val" id="total-visitors">2,345</div>
-                        <span
-                            style="font-size: 0.7rem; color: #22c55e; margin-bottom: 5px; display: flex; align-items: center; gap: 4px;">
-                            <span
-                                style="width: 6px; height: 6px; background: #22c55e; border-radius: 50%; display: inline-block; animation: pulse 2s infinite;"></span>
-                            Live
-                        </span>
-                    </div>
+                    <div class="stat-val">2.4k</div>
                     <div class="stat-label">Total Visitors</div>
                 </div>
                 <div class="stat-card" style="animation-delay: 0.2s">
@@ -91,7 +84,7 @@
                             <i class="fas fa-envelope"></i>
                         </div>
                     </div>
-                    <div class="stat-val" id="new-messages-count">0</div>
+                    <div class="stat-val">12</div>
                     <div class="stat-label">New Messages</div>
                 </div>
                 <div class="stat-card" style="animation-delay: 0.3s">
@@ -138,7 +131,7 @@
                     <div class="stat-label">Total Published</div>
                 </div>
                 <div class="stat-card">
-                    <button class="btn-primary" id="addProjectBtn" style="padding: 10px; font-size: 0.9rem;">
+                    <button class="btn-primary" style="padding: 10px; font-size: 0.9rem;">
                         <i class="fas fa-plus"></i> Add New Project
                     </button>
                 </div>
@@ -234,41 +227,240 @@
         </div>
     </main>
 
-    <!-- ─── MODAL ────────────────────────────────── -->
-    <div id="projectModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalTitle">Add New Project</h2>
-                <button class="close-modal" id="closeModal">&times;</button>
-            </div>
-            <form id="projectForm">
-                <input type="hidden" id="projectId">
-                <div class="form-group-admin">
-                    <label>Project Name</label>
-                    <input type="text" id="projectName" placeholder="e.g. Portfolio Website" required>
-                </div>
-                <div class="form-group-admin">
-                    <label>Description</label>
-                    <textarea id="projectDesc" rows="3" placeholder="Brief description..." required></textarea>
-                </div>
-                <div class="form-group-admin">
-                    <label>Image URL</label>
-                    <input type="text" id="projectImg" placeholder="assets/project1.webp" required>
-                </div>
-                <div class="form-group-admin">
-                    <label>Live Link</label>
-                    <input type="url" id="projectLink" placeholder="https://..." required>
-                </div>
-                <div class="form-group-admin">
-                    <label>Tags (comma separated)</label>
-                    <input type="text" id="projectTags" placeholder="React, Node.js, CSS">
-                </div>
-                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">Save Project</button>
-            </form>
+    <script src="admin.js"></script>
+</body>
+
+=======
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard — Noorul Muhsin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <!-- ─── SIDEBAR ────────────────────────────────── -->
+    <aside class="sidebar">
+        <div class="logo">
+            NM<span class="dot">.</span>
         </div>
-    </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-chart-pie"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-folder"></i>
+                    Projects
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-envelope"></i>
+                    Messages
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </li>
+        </ul>
+        <div class="nav-footer">
+            <a href="index.html" class="nav-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Site
+            </a>
+        </div>
+    </aside>
+
+    <!-- ─── MAIN CONTENT ───────────────────────────── -->
+    <main class="main-content">
+        <!-- Dashboard View -->
+        <div id="dashboard-view" class="view section-active">
+            <header class="header">
+                <h1>Overview</h1>
+                <div class="user-profile">
+                    <span>Noorul Muhsin</span>
+                    <img src="assets/profile.jpg" alt="Noorul" class="user-img">
+                </div>
+            </header>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card" style="animation-delay: 0.1s">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: rgba(124, 58, 237, 0.2); color: #7c3aed">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="stat-val">2.4k</div>
+                    <div class="stat-label">Total Visitors</div>
+                </div>
+                <div class="stat-card" style="animation-delay: 0.2s">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: rgba(6, 182, 212, 0.2); color: #06b6d4">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+                    <div class="stat-val">12</div>
+                    <div class="stat-label">New Messages</div>
+                </div>
+                <div class="stat-card" style="animation-delay: 0.3s">
+                    <div class="stat-header">
+                        <div class="stat-icon" style="background: rgba(34, 197, 94, 0.2); color: #22c55e">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                    </div>
+                    <div class="stat-val">2</div>
+                    <div class="stat-label">Projects Live</div>
+                </div>
+            </div>
+
+            <!-- Recent Messages -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Recent Messages</h2>
+                    <button class="btn-ghost" onclick="switchView('messages')">View All</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sender</th>
+                            <th>Subject</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Projects View -->
+        <div id="projects-view" class="view">
+            <header class="header">
+                <h1>Manage Projects</h1>
+            </header>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-val" id="project-count">2</div>
+                    <div class="stat-label">Total Published</div>
+                </div>
+                <div class="stat-card">
+                    <button class="btn-primary" style="padding: 10px; font-size: 0.9rem;">
+                        <i class="fas fa-plus"></i> Add New Project
+                    </button>
+                </div>
+            </div>
+            <div class="section-card">
+                <div class="projects-list-admin">
+                    <!-- Project items will be added here -->
+                    <div class="admin-project-item">
+                        <div style="display: flex; gap: 15px; align-items: center;">
+                            <img src="assets/project1.webp"
+                                style="width: 60px; height: 40px; border-radius: 8px; object-fit: cover;">
+                            <div>
+                                <h4 style="margin: 0;">Guardian Pharmacy</h4>
+                                <span style="font-size: 0.85rem; color: #8888aa;">Live Project</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn-ghost" style="padding: 8px;"><i class="fas fa-edit"></i></button>
+                            <button class="btn-ghost" style="padding: 8px; color: #ff4444;"><i
+                                    class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="admin-project-item"
+                        style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
+                        <div style="display: flex; gap: 15px; align-items: center;">
+                            <img src="assets/project2.webp"
+                                style="width: 60px; height: 40px; border-radius: 8px; object-fit: cover;">
+                            <div>
+                                <h4 style="margin: 0;">Doctor Prescription Builder</h4>
+                                <span style="font-size: 0.85rem; color: #8888aa;">Live Project</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn-ghost" style="padding: 8px;"><i class="fas fa-edit"></i></button>
+                            <button class="btn-ghost" style="padding: 8px; color: #ff4444;"><i
+                                    class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Messages View -->
+        <div id="messages-view" class="view">
+            <header class="header">
+                <h1>All Messages</h1>
+            </header>
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Inbox</h2>
+                </div>
+                <table id="full-messages-table">
+                    <thead>
+                        <tr>
+                            <th>Sender</th>
+                            <th>Message</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Settings View -->
+        <div id="settings-view" class="view">
+            <header class="header">
+                <h1>Settings</h1>
+            </header>
+            <div class="section-card">
+                <div class="settings-group">
+                    <h3>Profile Settings</h3>
+                    <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 15px;">
+                        <div class="form-group-admin">
+                            <label>Name</label>
+                            <input type="text" value="Noorul Muhsin"
+                                style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); padding: 12px; border-radius: 8px; color: white; width: 100%;">
+                        </div>
+                        <div class="form-group-admin">
+                            <label>Email</label>
+                            <input type="email" value="noorulmuhsinbca@gmail.com"
+                                style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); padding: 12px; border-radius: 8px; color: white; width: 100%;">
+                        </div>
+                        <button class="btn-primary" style="width: fit-content; padding: 12px 30px;">Save
+                            Profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <script src="admin.js"></script>
 </body>
 
+>>>>>>> 062f1af (Add all portfolio files including assets and images)
 </html>

@@ -70,6 +70,7 @@ body.sunny-theme .blob-3 {
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 body {
@@ -77,11 +78,17 @@ body {
     background: var(--bg);
     color: var(--text);
     overflow-x: hidden;
+    cursor: none;
 }
 
-@media (pointer: fine) {
+@media (pointer: coarse) {
     body {
-        cursor: none;
+        cursor: auto;
+    }
+
+    .cursor,
+    .cursor-follower {
+        display: none !important;
     }
 }
 
@@ -125,57 +132,42 @@ ul {
 }
 
 /* ─── CURSOR ───────────────────────────────────────────────────────────── */
-@media (pointer: fine) {
-    .cursor {
-        width: 10px;
-        height: 10px;
-        background: var(--accent2);
-        border-radius: 50%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        transition: transform .1s, width .25s, height .25s, background .25s;
-    }
-
-    .cursor-follower {
-        width: 36px;
-        height: 36px;
-        border: 1.5px solid rgba(124, 58, 237, .6);
-        border-radius: 50%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        z-index: 9998;
-        transform: translate(-50%, -50%);
-        transition: transform .18s ease, width .25s, height .25s, opacity .25s;
-    }
-
-    body:has(a:hover, button:hover) .cursor {
-        width: 20px;
-        height: 20px;
-        background: var(--accent3);
-    }
-
-    body:has(a:hover, button:hover) .cursor-follower {
-        opacity: 0;
-    }
+.cursor {
+    width: 10px;
+    height: 10px;
+    background: var(--accent2);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform .1s, width .25s, height .25s, background .25s;
 }
 
-@media (pointer: coarse),
-(max-width: 768px) {
+.cursor-follower {
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid rgba(124, 58, 237, .6);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform .18s ease, width .25s, height .25s, opacity .25s;
+}
 
-    .cursor,
-    .cursor-follower {
-        display: none !important;
-    }
+body:has(a:hover, button:hover) .cursor {
+    width: 20px;
+    height: 20px;
+    background: var(--accent3);
+}
 
-    body {
-        cursor: auto !important;
-    }
+body:has(a:hover, button:hover) .cursor-follower {
+    opacity: 0;
 }
 
 /* ─── LOADER ───────────────────────────────────────────────────────────── */
@@ -1423,23 +1415,12 @@ body.sunny-theme .theme-toggle .fa-moon {
 }
 
 @media (max-width: 768px) {
-
-    /* ── Base ── */
-    .container {
-        padding: 0 20px;
-    }
-
-    .section {
-        padding: 70px 0;
-    }
-
-    /* ── Navbar ── */
     .navbar {
-        padding: 14px 20px;
+        padding: 16px 20px;
     }
 
     .navbar.scrolled {
-        padding: 10px 20px;
+        padding: 12px 20px;
     }
 
     .nav-links,
@@ -1447,82 +1428,43 @@ body.sunny-theme .theme-toggle .fa-moon {
         display: none;
     }
 
-    .theme-toggle {
-        width: 38px;
-        height: 38px;
-        margin-right: 12px;
-    }
-
     .hamburger {
         display: flex;
     }
 
-    /* ── Hero ── */
+    /* ── HERO ── */
     .hero {
         grid-template-columns: 1fr;
-        min-height: 100svh;
-        padding: 90px 20px 50px;
+        padding: 100px 20px 60px;
         text-align: center;
-        gap: 24px;
+        gap: 32px;
     }
 
     .hero-inner {
-        order: 2;
         align-items: center;
-        width: 100%;
-        gap: 16px;
-    }
-
-    .hero-visual {
-        order: 1;
-        margin-bottom: 0;
-    }
-
-    .hero-title {
-        font-size: 2.4rem;
-        line-height: 1.15;
-        word-break: break-word;
-        overflow-wrap: break-word;
-    }
-
-    /* Restore line breaks for natural stacking */
-    .hero-title br {
-        display: block;
+        order: 2;
     }
 
     .hero-sub {
-        font-size: 0.95rem;
-        max-width: 100%;
-        margin-bottom: 0;
+        text-align: center;
     }
 
     .hero-actions {
-        flex-direction: column;
-        width: 100%;
-        align-items: center;
-    }
-
-    .hero-actions .btn {
-        width: 100%;
         justify-content: center;
-        max-width: 320px;
+        width: 100%;
     }
 
     .hero-stats {
         justify-content: center;
-        gap: 20px;
-        padding-top: 8px;
     }
 
-    .stat-num {
-        font-size: 1.4rem;
+    .hero-visual {
+        order: 1;
     }
 
-    /* ── Profile image ── */
     .profile-ring {
         width: 200px;
         height: 200px;
-        margin: 0 auto;
     }
 
     .float-card {
@@ -1533,7 +1475,44 @@ body.sunny-theme .theme-toggle .fa-moon {
         display: none;
     }
 
-    /* ── Projects ── */
+    /* ── ABOUT ── */
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .about-left {
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    .about-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .about-tags {
+        justify-content: center;
+    }
+
+    .about-right .btn {
+        align-self: center;
+    }
+
+    .exp-badge {
+        right: -10px;
+        bottom: -16px;
+        padding: 14px 18px;
+    }
+
+    .exp-num {
+        font-size: 1.6rem;
+    }
+
+    /* ── WORK ── */
     .projects-grid {
         grid-template-columns: 1fr;
     }
@@ -1542,7 +1521,7 @@ body.sunny-theme .theme-toggle .fa-moon {
         grid-column: auto;
     }
 
-    /* ── Skills ── */
+    /* ── SKILLS ── */
     .skills-bento {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1555,49 +1534,107 @@ body.sunny-theme .theme-toggle .fa-moon {
         grid-row: auto;
     }
 
-    /* ── Contact ── */
+    /* ── CONTACT ── */
     .contact-wrap {
         padding: 36px 20px;
+    }
+
+    .contact-wrap .section-title {
+        text-align: center;
+    }
+
+    .contact-sub {
+        text-align: center;
     }
 
     .form-row {
         grid-template-columns: 1fr;
     }
 
-    /* ── Footer ── */
+    .social-links {
+        justify-content: center;
+    }
+
+    /* ── FOOTER ── */
     .footer-inner {
         flex-direction: column;
         gap: 16px;
         text-align: center;
     }
 
-    /* ── About ── */
-    .about-grid {
-        grid-template-columns: 1fr;
+    /* ── GENERAL ── */
+    .section {
+        padding: 70px 0;
     }
 
-    .about-left {
-        margin: 0 auto;
-        max-width: 280px;
-    }
-
-    .section-title {
-        font-size: 2rem;
+    .container {
+        padding: 0 20px;
     }
 }
 
-/* ── Small phones (≤480px) ── */
 @media (max-width: 480px) {
+
+    /* ── GENERAL ── */
+    .container {
+        padding: 0 16px;
+    }
+
+    .section {
+        padding: 60px 0;
+    }
+
+    .section-title {
+        font-size: clamp(1.6rem, 7vw, 2rem);
+        line-height: 1.2;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+        padding: 14px 16px;
+    }
+
+    .navbar.scrolled {
+        padding: 10px 16px;
+    }
+
+    /* ── HERO ── */
     .hero {
-        padding: 80px 16px 40px;
+        padding: 90px 16px 50px;
+        gap: 20px;
     }
 
     .hero-title {
-        font-size: 2rem;
+        font-size: clamp(1.8rem, 9vw, 2.4rem);
+        line-height: 1.12;
     }
 
-    .hero-title em {
-        font-size: 2rem;
+    .hero-sub {
+        font-size: 0.9rem;
+        line-height: 1.65;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+        align-items: stretch;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .hero-stats {
+        gap: 14px;
+        flex-wrap: wrap;
+    }
+
+    .stat-num {
+        font-size: 1.4rem;
+    }
+
+    .stat-label {
+        font-size: 0.72rem;
     }
 
     .profile-ring {
@@ -1605,27 +1642,105 @@ body.sunny-theme .theme-toggle .fa-moon {
         height: 170px;
     }
 
-    .section-title {
-        font-size: 1.7rem;
+    /* ── ABOUT ── */
+    .about-left {
+        max-width: 240px;
     }
 
+    .exp-badge {
+        right: -8px;
+        bottom: -12px;
+        padding: 10px 14px;
+        border-radius: 12px;
+    }
+
+    .exp-num {
+        font-size: 1.4rem;
+    }
+
+    .exp-txt {
+        font-size: 0.68rem;
+    }
+
+    .about-desc {
+        font-size: 0.92rem;
+        line-height: 1.7;
+    }
+
+    .about-tags span {
+        font-size: 0.76rem;
+        padding: 5px 12px;
+    }
+
+    /* ── WORK ── */
+    .project-meta {
+        padding: 18px 16px;
+    }
+
+    .project-meta h3 {
+        font-size: 1.1rem;
+    }
+
+    .project-meta p {
+        font-size: 0.875rem;
+    }
+
+    /* ── SKILLS ── */
     .skills-bento {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
     }
 
-    .stat-num {
-        font-size: 1.2rem;
+    .skill-tile {
+        padding: 18px 10px;
     }
 
-    .hero-stats {
-        gap: 14px;
+    .skill-tile i {
+        font-size: 1.8rem;
     }
 
-    .stat-label {
-        font-size: 0.72rem;
+    .skill-tile span {
+        font-size: 0.76rem;
+    }
+
+    /* ── CONTACT ── */
+    .contact-wrap {
+        padding: 28px 16px;
+    }
+
+    .contact-sub {
+        font-size: 0.88rem;
+    }
+
+    .social-links {
+        gap: 10px;
+    }
+
+    .social-btn {
+        width: 42px;
+        height: 42px;
+    }
+
+    /* ── FORM ── (prevents iOS zoom on focus) */
+    input,
+    textarea {
+        font-size: 16px;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+        padding: 20px 0;
+    }
+
+    .footer-copy {
+        font-size: 0.75rem;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-track span {
+        font-size: 0.78rem;
     }
 }
-
 
 /* ─── SUNNY ANIMATIONS ───────────────────────── */
 .sun-rays {
