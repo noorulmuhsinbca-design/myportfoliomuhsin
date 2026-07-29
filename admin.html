@@ -126,49 +126,18 @@
             </header>
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-val" id="project-count">2</div>
+                    <div class="stat-val" id="project-count">0</div>
                     <div class="stat-label">Total Published</div>
                 </div>
                 <div class="stat-card">
-                    <button class="btn-primary" style="padding: 10px; font-size: 0.9rem;">
+                    <button class="btn-primary" onclick="openProjectModal()" style="padding: 10px; font-size: 0.9rem;">
                         <i class="fas fa-plus"></i> Add New Project
                     </button>
                 </div>
             </div>
             <div class="section-card">
-                <div class="projects-list-admin">
-                    <!-- Project items will be added here -->
-                    <div class="admin-project-item">
-                        <div style="display: flex; gap: 15px; align-items: center;">
-                            <img src="assets/project1.webp"
-                                style="width: 60px; height: 40px; border-radius: 8px; object-fit: cover;">
-                            <div>
-                                <h4 style="margin: 0;">Guardian Pharmacy</h4>
-                                <span style="font-size: 0.85rem; color: #8888aa;">Live Project</span>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 10px;">
-                            <button class="btn-ghost" style="padding: 8px;"><i class="fas fa-edit"></i></button>
-                            <button class="btn-ghost" style="padding: 8px; color: #ff4444;"><i
-                                    class="fas fa-trash"></i></button>
-                        </div>
-                    </div>
-                    <div class="admin-project-item"
-                        style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
-                        <div style="display: flex; gap: 15px; align-items: center;">
-                            <img src="assets/project2.webp"
-                                style="width: 60px; height: 40px; border-radius: 8px; object-fit: cover;">
-                            <div>
-                                <h4 style="margin: 0;">Doctor Prescription Builder</h4>
-                                <span style="font-size: 0.85rem; color: #8888aa;">Live Project</span>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 10px;">
-                            <button class="btn-ghost" style="padding: 8px;"><i class="fas fa-edit"></i></button>
-                            <button class="btn-ghost" style="padding: 8px; color: #ff4444;"><i
-                                    class="fas fa-trash"></i></button>
-                        </div>
-                    </div>
+                <div class="projects-list-admin" id="adminProjectsList">
+                    <!-- Populated by JS -->
                 </div>
             </div>
         </div>
@@ -225,6 +194,58 @@
             </div>
         </div>
     </main>
+
+    <!-- ─── PROJECT MODAL ──────────────────────────── -->
+    <div id="projectModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Project</h2>
+                <button type="button" class="modal-close" onclick="closeProjectModal()">&times;</button>
+            </div>
+            <form id="projectForm" onsubmit="saveProject(event)">
+                <input type="hidden" id="projectEditIndex" value="-1">
+                <div class="form-group-admin">
+                    <label for="projectTitleInput">Project Title *</label>
+                    <input type="text" id="projectTitleInput" placeholder="e.g. Guardian Pharmacy" required>
+                </div>
+                <div class="form-group-admin">
+                    <label for="projectDescInput">Description *</label>
+                    <textarea id="projectDescInput" rows="3" placeholder="Brief project summary..." required></textarea>
+                </div>
+                <div class="form-group-admin">
+                    <label for="projectLinkInput">Live Project Link (optional)</label>
+                    <input type="text" id="projectLinkInput" placeholder="https://example.com or #">
+                </div>
+                <div class="form-group-admin">
+                    <label>Project Images (Upload Multiple or Add URLs) *</label>
+                    <div class="image-upload-wrapper">
+                        <label class="file-upload-btn" for="projectFileInput">
+                            <i class="fas fa-images"></i>
+                            <span>Upload Images</span>
+                            <input type="file" id="projectFileInput" accept="image/*" multiple
+                                onchange="handleFileSelect(event)">
+                        </label>
+                        <span class="or-divider">OR</span>
+                        <input type="text" id="projectImgUrlInput" placeholder="Paste Image URL / Path & press Enter"
+                            onkeydown="handleUrlKeydown(event)" style="flex: 1;">
+                        <button type="button" class="btn-ghost" onclick="addUrlImage()" style="padding: 10px 14px;"><i
+                                class="fas fa-plus"></i></button>
+                    </div>
+                    <small style="color: #8888aa; font-size: 0.78rem; margin-top: 6px; display: block;">First image is
+                        cover thumbnail. Click '×' to remove an image.</small>
+                    <div id="multiImagePreviewGrid" class="multi-image-grid" style="display: none;"></div>
+                </div>
+                <div class="form-group-admin">
+                    <label for="projectTagsInput">Technologies / Tags (comma separated)</label>
+                    <input type="text" id="projectTagsInput" placeholder="React, Tailwind, Node.js">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-ghost" onclick="closeProjectModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script src="admin.js"></script>
 </body>

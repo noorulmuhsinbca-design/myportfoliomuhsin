@@ -229,3 +229,307 @@ if (hireMeBtn) {
         }
     }
 })();
+
+// ─── DYNAMIC PROJECTS RENDER ──────────────────────
+function renderPortfolioProjects() {
+    const projectsGrid = document.querySelector('.projects-grid');
+    if (!projectsGrid) return;
+
+    const DEFAULT_PROJECTS = [
+        {
+            title: "Guardian Pharmacy",
+            description: "A full-stack pharmacy platform with real-time ordering, prescription management, and doctor booking.",
+            link: "https://guardian-pharmacy.vercel.app/",
+            image: "assets/project1.webp",
+            tags: ["React", "Tailwind", "Node.js"]
+        },
+        {
+            title: "Doctor Prescription Builder",
+            description: "A digital prescription platform for doctors — create, save, share and print prescriptions with live preview and patient management.",
+            link: "https://guardian-doctor-prescription.vercel.app/",
+            image: "assets/project2.webp",
+            tags: ["React", "Firebase", "JavaScript"]
+        }
+    ];
+
+    let projects = DEFAULT_PROJECTS;
+    try {
+        const stored = localStorage.getItem('portfolio_projects');
+        if (stored) {
+            projects = JSON.parse(stored);
+        }
+    } catch (e) {
+        projects = DEFAULT_PROJECTS;
+    }
+
+    if (!projects || projects.length === 0) return;
+
+    projectsGrid.innerHTML = projects.map((p, index) => {
+        const num = String(index + 1).padStart(2, '0');
+        const tagsHtml = (p.tags || []).map(t => `<span>${t}</span>`).join('');
+        const imagesList = (Array.isArray(p.images) && p.images.length > 0) ? p.images : [p.image || 'assets/project1.webp'];
+        const coverImg = imagesList[0];
+        const hasMultiple = imagesList.length > 1;
+
+        const galleryControls = hasMultiple ? `
+            <div class="gallery-badge" onclick="openLightbox(event, ${index}, 0)"><i class="fas fa-images"></i> ${imagesList.length} Photos</div>
+            <div class="project-img-dots">
+                ${imagesList.map((_, i) => `
+                    <span class="img-dot ${i === 0 ? 'active' : ''}" onclick="switchProjectCardImage(event, ${index}, ${i})"></span>
+                `).join('')}
+            </div>
+        ` : '';
+
+        const hasLink = p.link && p.link !== '#';
+
+        return `
+            <article class="project-card reveal visible" data-index="${num}" id="project-card-${index}">
+                <div class="project-img-wrap" onclick="openLightbox(event, ${index}, 0)" style="cursor: pointer;" title="Click to view full image gallery">
+                    <img src="${coverImg}" alt="${p.title}" class="project-img" id="card-img-${index}" onerror="this.src='assets/project1.webp'" />
+                    ${galleryControls}
+                    <div class="project-overlay">
+                        <span class="project-link" style="pointer-events: none;" title="View Gallery">
+                            <i class="fas fa-search-plus"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="project-meta">
+                    <div class="project-tags">
+                        ${tagsHtml}
+                    </div>
+                    <h3>${p.title}</h3>
+                    <p>${p.description}</p>
+                    ${hasLink ? `<a href="${p.link}" class="project-more" target="_blank" rel="noopener">
+                        View Project <i class="fas fa-arrow-right"></i>
+                    </a>` : ''}
+                </div>
+            </article>
+        `;
+    }).join('');
+
+    // Rebind tilt animations
+    document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+            const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+            card.style.transform = `translateY(-6px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+    });
+}
+
+window.switchProjectCardImage = function (e, projIdx, imgIdx) {
+    e.stopPropagation();
+    const stored = localStorage.getItem('portfolio_projects');
+    if (!stored) return;
+    try {
+        const projects = JSON.parse(stored);
+        const p = projects[projIdx];
+        if (!p) return;
+        const imagesList = (Array.isArray(p.images) && p.images.length > 0) ? p.images : [p.image];
+        const targetImgSrc = imagesList[imgIdx];
+
+        const cardImg = document.getElementById(`card-img-${projIdx}`);
+        if (cardImg && targetImgSrc) {
+            cardImg.src = targetImgSrc;
+        }
+
+        const card = document.getElementById(`project-card-${projIdx}`);
+        if (card) {
+            const dots = card.querySelectorAll('.img-dot');
+            dots.forEach((dot, idx) => {
+                if (idx === imgIdx) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+        }
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+/* ─── LIGHTBOX MODAL VIEWER CONTROLLER ──────────────────────────── */
+let lightboxState = {
+    projIndex: -1,
+    imgIndex: 0,
+    images: [],
+    title: ''
+};
+
+window.openLightbox = function (e, projIdx, imgIdx = 0) {
+    if (e) e.stopPropagation();
+    const stored = localStorage.getItem('portfolio_projects');
+    if (!stored) return;
+    try {
+        const projects = JSON.parse(stored);
+        const p = projects[projIdx];
+        if (!p) return;
+
+        const imgs = (Array.isArray(p.images) && p.images.length > 0) ? p.images : [p.image || 'assets/project1.webp'];
+        lightboxState = {
+            projIndex: projIdx,
+            imgIndex: imgIdx,
+            images: imgs,
+            title: p.title || 'Project Image'
+        };
+
+        renderLightboxView();
+
+        const modal = document.getElementById('lightboxModal');
+        if (modal) modal.classList.add('active');
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+function renderLightboxView() {
+    const { imgIndex, images, title } = lightboxState;
+    const imgEl = document.getElementById('lightboxImg');
+    const titleEl = document.getElementById('lightboxTitle');
+    const counterEl = document.getElementById('lightboxCounter');
+    const thumbsEl = document.getElementById('lightboxThumbs');
+    const prevBtn = document.querySelector('.lightbox-prev');
+    const nextBtn = document.querySelector('.lightbox-next');
+
+    if (!imgEl) return;
+
+    imgEl.src = images[imgIndex] || 'assets/project1.webp';
+    if (titleEl) titleEl.textContent = title;
+    if (counterEl) counterEl.textContent = `${imgIndex + 1} / ${images.length}`;
+
+    if (prevBtn) prevBtn.style.display = images.length > 1 ? 'flex' : 'none';
+    if (nextBtn) nextBtn.style.display = images.length > 1 ? 'flex' : 'none';
+
+    if (thumbsEl) {
+        if (images.length > 1) {
+            thumbsEl.style.display = 'flex';
+            thumbsEl.innerHTML = images.map((src, i) => `
+                <div class="lightbox-thumb-item ${i === imgIndex ? 'active' : ''}" onclick="selectLightboxImage(${i})">
+                    <img src="${src}" alt="Thumb ${i + 1}">
+                </div>
+            `).join('');
+        } else {
+            thumbsEl.style.display = 'none';
+        }
+    }
+}
+
+window.selectLightboxImage = function (i) {
+    lightboxState.imgIndex = i;
+    renderLightboxView();
+};
+
+window.prevLightboxImage = function () {
+    if (lightboxState.images.length <= 1) return;
+    lightboxState.imgIndex = (lightboxState.imgIndex - 1 + lightboxState.images.length) % lightboxState.images.length;
+    renderLightboxView();
+};
+
+window.nextLightboxImage = function () {
+    if (lightboxState.images.length <= 1) return;
+    lightboxState.imgIndex = (lightboxState.imgIndex + 1) % lightboxState.images.length;
+    renderLightboxView();
+};
+
+window.closeLightbox = function () {
+    const modal = document.getElementById('lightboxModal');
+    if (modal) modal.classList.remove('active');
+};
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    const modal = document.getElementById('lightboxModal');
+    if (!modal || !modal.classList.contains('active')) return;
+
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowLeft') prevLightboxImage();
+    else if (e.key === 'ArrowRight') nextLightboxImage();
+});
+
+// Click outside modal content to close
+document.addEventListener('click', (e) => {
+    const modal = document.getElementById('lightboxModal');
+    if (modal && e.target === modal) {
+        closeLightbox();
+    }
+});
+
+renderPortfolioProjects();
+
+// ─── PROJECT SHOWCASE SCROLL STRIP ─────────────────
+function renderProjectScrollStrip() {
+    const track = document.getElementById('pssTrack');
+    if (!track) return;
+
+    const DEFAULT_PROJECTS = [
+        {
+            title: "Guardian Pharmacy",
+            images: ["assets/project1.webp"],
+            image: "assets/project1.webp",
+            tags: ["React", "Tailwind", "Node.js"],
+            link: "https://guardian-pharmacy.vercel.app/"
+        },
+        {
+            title: "Doctor Prescription Builder",
+            images: ["assets/project2.webp"],
+            image: "assets/project2.webp",
+            tags: ["React", "Firebase"],
+            link: "https://guardian-doctor-prescription.vercel.app/"
+        }
+    ];
+
+    let projects = DEFAULT_PROJECTS;
+    try {
+        const stored = localStorage.getItem('portfolio_projects');
+        if (stored) projects = JSON.parse(stored);
+    } catch (e) {
+        projects = DEFAULT_PROJECTS;
+    }
+
+    if (!projects || projects.length === 0) {
+        document.getElementById('projectShowcaseStrip')?.style.setProperty('display', 'none');
+        return;
+    }
+
+    // Build a big list of images from all projects (flatten all images)
+    const allItems = [];
+    projects.forEach((p, pIdx) => {
+        const imgs = (Array.isArray(p.images) && p.images.length > 0) ? p.images : [p.image || 'assets/project1.webp'];
+        imgs.forEach((src, iIdx) => {
+            allItems.push({
+                title: p.title,
+                tags: p.tags || [],
+                src,
+                projIdx: pIdx,
+                imgIdx: iIdx
+            });
+        });
+    });
+
+    // Duplicate for seamless infinite loop
+    const doubled = [...allItems, ...allItems];
+
+    track.innerHTML = doubled.map(item => {
+        const tagsHtml = item.tags.slice(0, 3).map(t => `<span>${t}</span>`).join('');
+        return `
+            <div class="pss-card" onclick="openLightbox(null, ${item.projIdx}, ${item.imgIdx})" title="Click to view ${item.title}">
+                <img src="${item.src}" alt="${item.title}" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg, rgba(124,58,237,0.12) 0%, rgba(6,78,59,0.08) 100%)'; this.style.display='none';">
+                <div class="pss-card-info">
+                    <h4>${item.title}</h4>
+                    <div class="pss-card-tags">${tagsHtml}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    // Adjust animation speed based on count
+    const speed = Math.max(20, allItems.length * 8);
+    track.style.animationDuration = `${speed}s`;
+}
+
+renderProjectScrollStrip();
+
+
+

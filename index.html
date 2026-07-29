@@ -253,6 +253,19 @@
         </div>
     </section>
 
+    <!-- ─── PROJECT SHOWCASE SCROLL STRIP ───────── -->
+    <div class="project-scroll-strip" id="projectShowcaseStrip">
+        <div class="pss-label">
+            <span class="pss-tag">Live Projects</span>
+            <h3>Moving through my work</h3>
+        </div>
+        <div class="pss-overflow-mask">
+            <div class="pss-track" id="pssTrack">
+                <!-- Cards populated by JS from localStorage -->
+            </div>
+        </div>
+    </div>
+
     <!-- ─── SKILLS ────────────────────────────────── -->
     <section class="skills section" id="skills">
         <div class="container">
@@ -361,6 +374,35 @@
             </a>
         </div>
     </footer>
+
+    <!-- ─── FLOATING WHATSAPP BUTTON ──────────────── -->
+    <a href="https://wa.me/918248513188" class="whatsapp-float" target="_blank" rel="noopener noreferrer"
+        aria-label="Chat on WhatsApp">
+        <span class="whatsapp-pulse"></span>
+        <span class="whatsapp-pulse whatsapp-pulse-2"></span>
+        <div class="whatsapp-icon">
+            <i class="fab fa-whatsapp"></i>
+        </div>
+        <span class="whatsapp-text">Chat on WhatsApp</span>
+    </a>
+
+    <!-- ─── LIGHTBOX IMAGE VIEWER MODAL ──────────────── -->
+    <div id="lightboxModal" class="lightbox-modal">
+        <button type="button" class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <button type="button" class="lightbox-nav lightbox-prev" onclick="prevLightboxImage()"><i
+                class="fas fa-chevron-left"></i></button>
+        <button type="button" class="lightbox-nav lightbox-next" onclick="nextLightboxImage()"><i
+                class="fas fa-chevron-right"></i></button>
+
+        <div class="lightbox-content">
+            <img id="lightboxImg" src="" alt="Enlarged project screenshot">
+            <div class="lightbox-meta">
+                <h4 id="lightboxTitle">Project Title</h4>
+                <span id="lightboxCounter">1 / 1</span>
+            </div>
+            <div id="lightboxThumbs" class="lightbox-thumbs"></div>
+        </div>
+    </div>
 
     <script type="module" src="script.js"></script>
 </body>
