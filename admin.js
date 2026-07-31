@@ -42,42 +42,40 @@ function initSidebar() {
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            const text = link.textContent.trim().toLowerCase();
-            if (text === 'back to site') return;
+            const href = link.getAttribute('href');
+            if (href && href !== '#' && href !== '') return;
 
             e.preventDefault();
+            const viewTarget = link.getAttribute('data-view') || link.textContent.trim().toLowerCase();
+            if (viewTarget.includes('back to site')) return;
 
-            // Update UI
-            navLinks.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
-
-            // Switch view
-            switchView(text);
+            switchView(viewTarget);
         });
     });
 }
 
 function switchView(viewName) {
+    const cleanView = (viewName || '').trim().toLowerCase();
     // Update Views
     const views = document.querySelectorAll('.view');
     views.forEach(v => v.classList.remove('section-active'));
 
-    const targetView = document.getElementById(`${viewName}-view`);
+    const targetView = document.getElementById(`${cleanView}-view`);
     if (targetView) {
         targetView.classList.add('section-active');
     }
 
-    if (viewName === 'settings') {
+    if (cleanView === 'settings') {
         loadCloudinarySettingsUI();
     }
 
     // Update Sidebar active state
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
-        const text = link.textContent.trim().toLowerCase();
-        if (text === viewName) {
+        const linkView = link.getAttribute('data-view') || link.textContent.trim().toLowerCase();
+        if (linkView === cleanView) {
             link.classList.add('active');
-        } else if (text !== 'back to site') {
+        } else if (!linkView.includes('back to site')) {
             link.classList.remove('active');
         }
     });
