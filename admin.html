@@ -220,8 +220,8 @@
                     <label>Project Images (Upload Multiple or Add URLs) *</label>
                     <div class="image-upload-wrapper">
                         <label class="file-upload-btn" for="projectFileInput">
-                            <i class="fas fa-images"></i>
-                            <span>Upload Images</span>
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Upload to Cloudinary</span>
                             <input type="file" id="projectFileInput" accept="image/*" multiple
                                 onchange="handleFileSelect(event)">
                         </label>
@@ -232,7 +232,10 @@
                                 class="fas fa-plus"></i></button>
                     </div>
                     <small style="color: #8888aa; font-size: 0.78rem; margin-top: 6px; display: block;">First image is
-                        cover thumbnail. Click '×' to remove an image.</small>
+                        cover thumbnail. Images auto-upload directly to Cloudinary.</small>
+                    <div id="uploadProgressStatus"
+                        style="display: none; margin-top: 10px; padding: 10px 14px; border-radius: 8px; background: rgba(124, 58, 237, 0.15); border: 1px solid rgba(124, 58, 237, 0.4); color: #a78bfa; font-size: 0.85rem; align-items: center; gap: 10px;">
+                    </div>
                     <div id="multiImagePreviewGrid" class="multi-image-grid" style="display: none;"></div>
                 </div>
                 <div class="form-group-admin">

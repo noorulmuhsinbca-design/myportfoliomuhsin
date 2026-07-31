@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadMessages();
     loadProjects();
     updateStats();
+    loadCloudinarySettingsUI();
 
     // Close modal on click outside
     const modal = document.getElementById('projectModal');
@@ -64,6 +65,10 @@ function switchView(viewName) {
     const targetView = document.getElementById(`${viewName}-view`);
     if (targetView) {
         targetView.classList.add('section-active');
+    }
+
+    if (viewName === 'settings') {
+        loadCloudinarySettingsUI();
     }
 
     // Update Sidebar active state
@@ -221,27 +226,194 @@ function renderImageGrid() {
     `).join('');
 }
 
-function handleFileSelect(e) {
+/* ─── CLOUDINARY CONFIGURATION & UPLOAD LOGIC ─────────────────────── */
+const DEFAULT_CLOUDINARY = {
+    cloudName: "ekjftinw",
+    apiKey: "127915584446356",
+    apiSecret: "kp4gfa8aiNQS1fFu_LbVp-q7pco"
+};
+
+function getCloudinaryConfig() {
+    try {
+        const stored = localStorage.getItem('cloudinary_config');
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            return {
+                cloudName: parsed.cloudName || DEFAULT_CLOUDINARY.cloudName,
+                apiKey: parsed.apiKey || DEFAULT_CLOUDINARY.apiKey,
+                apiSecret: parsed.apiSecret || DEFAULT_CLOUDINARY.apiSecret
+            };
+        }
+    } catch (e) {
+        console.error('Error loading stored Cloudinary config', e);
+    }
+    return DEFAULT_CLOUDINARY;
+}
+
+function saveCloudinaryConfig(config) {
+    localStorage.setItem('cloudinary_config', JSON.stringify(config));
+}
+
+async function generateCloudinarySignature(params, apiSecret) {
+    const sortedKeys = Object.keys(params).sort();
+    const toSign = sortedKeys.map(k => `${k}=${params[k]}`).join('&') + apiSecret;
+    const encoder = new TextEncoder();
+    const data = encoder.encode(toSign);
+    const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function uploadFileToCloudinary(file) {
+    const config = getCloudinaryConfig();
+    if (!config.cloudName || !config.apiKey || !config.apiSecret) {
+        throw new Error("Missing Cloudinary configuration keys.");
+    }
+
+    const timestamp = Math.floor(Date.now() / 1000);
+    const params = { timestamp };
+    const signature = await generateCloudinarySignature(params, config.apiSecret);
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('api_key', config.apiKey);
+    formData.append('timestamp', timestamp);
+    formData.append('signature', signature);
+
+    const response = await fetch(`https://api.cloudinary.com/v1_1/${config.cloudName}/image/upload`, {
+        method: 'POST',
+        body: formData
+    });
+
+    if (!response.ok) {
+        const errJson = await response.json().catch(() => ({}));
+        throw new Error(errJson.error?.message || `Cloudinary upload failed (Status ${response.status})`);
+    }
+
+    const data = await response.json();
+    return data.secure_url || data.url;
+}
+
+function loadCloudinarySettingsUI() {
+    const config = getCloudinaryConfig();
+    const nameEl = document.getElementById('cldCloudName');
+    const keyEl = document.getElementById('cldApiKey');
+    const secretEl = document.getElementById('cldApiSecret');
+
+    if (nameEl) nameEl.value = config.cloudName || '';
+    if (keyEl) keyEl.value = config.apiKey || '';
+    if (secretEl) secretEl.value = config.apiSecret || '';
+}
+
+function saveCloudinarySettings(e) {
+    if (e) e.preventDefault();
+    const cloudName = document.getElementById('cldCloudName')?.value.trim();
+    const apiKey = document.getElementById('cldApiKey')?.value.trim();
+    const apiSecret = document.getElementById('cldApiSecret')?.value.trim();
+
+    if (!cloudName || !apiKey || !apiSecret) {
+        alert('Please fill in all Cloudinary fields.');
+        return;
+    }
+
+    saveCloudinaryConfig({ cloudName, apiKey, apiSecret });
+    alert('Cloudinary settings saved successfully!');
+    const badge = document.getElementById('cldStatusBadge');
+    if (badge) {
+        badge.className = 'status status-read';
+        badge.innerHTML = '<i class="fas fa-check-circle"></i> Connected';
+    }
+}
+
+async function testCloudinaryConnection() {
+    const badge = document.getElementById('cldStatusBadge');
+    if (badge) {
+        badge.className = 'status status-new';
+        badge.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Testing...';
+    }
+
+    try {
+        const testPixel = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+        const res = await fetch(testPixel);
+        const blob = await res.blob();
+        const testFile = new File([blob], 'test.png', { type: 'image/png' });
+
+        const url = await uploadFileToCloudinary(testFile);
+        if (url && url.includes('cloudinary.com')) {
+            alert('Cloudinary Connection Successful! Test image uploaded to your account.');
+            if (badge) {
+                badge.className = 'status status-read';
+                badge.innerHTML = '<i class="fas fa-check-circle"></i> Connected';
+            }
+        } else {
+            throw new Error('Invalid URL returned');
+        }
+    } catch (err) {
+        alert('Cloudinary Connection Failed: ' + err.message);
+        if (badge) {
+            badge.className = 'status status-rejected';
+            badge.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
+        }
+    }
+}
+
+async function handleFileSelect(e) {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
 
-    let loadedCount = 0;
-    files.forEach(file => {
-        if (file.size > 8 * 1024 * 1024) {
-            alert(`File "${file.name}" is over 8MB. Please select smaller images.`);
-            return;
+    const statusEl = document.getElementById('uploadProgressStatus');
+    if (statusEl) {
+        statusEl.style.display = 'flex';
+        statusEl.style.background = 'rgba(124, 58, 237, 0.15)';
+        statusEl.style.borderColor = 'rgba(124, 58, 237, 0.4)';
+        statusEl.style.color = '#a78bfa';
+        statusEl.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Uploading ${files.length} image(s) to Cloudinary...`;
+    }
+
+    let successCount = 0;
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file.size > 15 * 1024 * 1024) {
+            alert(`File "${file.name}" is over 15MB. Please choose smaller files.`);
+            continue;
         }
 
-        const reader = new FileReader();
-        reader.onload = function (evt) {
-            currentImages.push(evt.target.result);
-            loadedCount++;
-            if (loadedCount === files.length) {
-                renderImageGrid();
-            }
-        };
-        reader.readAsDataURL(file);
-    });
+        if (statusEl) {
+            statusEl.innerHTML = `<i class="fas fa-cloud-upload-alt fa-spin"></i> Uploading image ${i + 1} of ${files.length} to Cloudinary...`;
+        }
+
+        try {
+            const uploadedUrl = await uploadFileToCloudinary(file);
+            currentImages.push(uploadedUrl);
+            successCount++;
+            renderImageGrid();
+        } catch (err) {
+            console.error('Cloudinary upload error:', err);
+            alert(`Failed to upload "${file.name}" to Cloudinary: ${err.message}\nFalling back to local preview.`);
+
+            // Local fallback
+            await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function (evt) {
+                    currentImages.push(evt.target.result);
+                    renderImageGrid();
+                    resolve();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    }
+
+    if (statusEl) {
+        statusEl.style.display = 'flex';
+        statusEl.style.background = 'rgba(34, 197, 94, 0.15)';
+        statusEl.style.borderColor = 'rgba(34, 197, 94, 0.4)';
+        statusEl.style.color = '#4ade80';
+        statusEl.innerHTML = `<i class="fas fa-check-circle"></i> ${successCount} image(s) uploaded to Cloudinary successfully!`;
+        setTimeout(() => {
+            if (statusEl) statusEl.style.display = 'none';
+        }, 3500);
+    }
 
     e.target.value = '';
 }
@@ -389,5 +561,7 @@ window.handleFileSelect = handleFileSelect;
 window.addUrlImage = addUrlImage;
 window.handleUrlKeydown = handleUrlKeydown;
 window.removeImageAt = removeImageAt;
+window.saveCloudinarySettings = saveCloudinarySettings;
+window.testCloudinaryConnection = testCloudinaryConnection;
 
 
