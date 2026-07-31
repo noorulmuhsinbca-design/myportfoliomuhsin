@@ -285,7 +285,7 @@ function renderPortfolioProjects() {
         return `
             <article class="project-card reveal visible" data-index="${num}" id="project-card-${index}">
                 <div class="project-img-wrap" onclick="openLightbox(event, ${index}, 0)" style="cursor: pointer;" title="Click to view full image gallery">
-                    <img src="${coverImg}" alt="${p.title}" class="project-img" id="card-img-${index}" onerror="this.src='assets/project1.webp'" />
+                    <img src="${coverImg}" alt="${p.title}" class="project-img" id="card-img-${index}" onerror="this.onerror=null;this.src=''" />
                     ${galleryControls}
                     <div class="project-overlay">
                         <span class="project-link" style="pointer-events: none;" title="View Gallery">
@@ -515,7 +515,7 @@ function renderProjectScrollStrip() {
         const tagsHtml = item.tags.slice(0, 3).map(t => `<span>${t}</span>`).join('');
         return `
             <div class="pss-card" onclick="openLightbox(null, ${item.projIdx}, ${item.imgIdx})" title="Click to view ${item.title}">
-                <img src="${item.src}" alt="${item.title}" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg, rgba(124,58,237,0.12) 0%, rgba(6,78,59,0.08) 100%)'; this.style.display='none';">
+                <img src="${item.src}" alt="${item.title}" loading="lazy" onerror="this.onerror=null;this.parentElement.style.background='linear-gradient(135deg, rgba(124,58,237,0.12) 0%, rgba(6,78,59,0.08) 100%)'; this.style.display='none';">
                 <div class="pss-card-info">
                     <h4>${item.title}</h4>
                     <div class="pss-card-tags">${tagsHtml}</div>
