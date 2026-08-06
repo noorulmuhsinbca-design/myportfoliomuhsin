@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Developed by Muhsin</title>
+    <meta name="description"
+        content="This website was crafted by Noorul Muhsin — a creative developer specialising in premium digital experiences." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #08080f;
+            --surface: #111118;
+            --border: rgba(255, 255, 255, .08);
+            --text: #f0f0ff;
+            --muted: #8888aa;
+            --accent1: #7c3aed;
+            --accent2: #06b6d4;
+            --accent3: #f59e0b;
+            --grad: linear-gradient(135deg, #7c3aed, #06b6d4);
+            --font: 'Inter', sans-serif;
+            --font-head: 'Syne', sans-serif;
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* ── BACKGROUND ORBS ── */
+        .bg-orbs {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: .35;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent1);
+            top: -150px;
+            left: -100px;
+            animation: orbFloat 10s ease-in-out infinite alternate;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent2);
+            bottom: -120px;
+            right: -80px;
+            animation: orbFloat 13s ease-in-out infinite alternate-reverse;
+        }
+
+        .orb-3 {
+            width: 280px;
+            height: 280px;
+            background: var(--accent3);
+            top: 40%;
+            left: 55%;
+            animation: orbFloat 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes orbFloat {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(30px, 40px) scale(1.1);
+            }
+        }
+
+        /* ── PARTICLES ── */
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(124, 58, 237, .6);
+            border-radius: 50%;
+            animation: particleRise linear infinite;
+        }
+
+        @keyframes particleRise {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: .6;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* ── WRAPPER ── */
+        .wrapper {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 24px 24px;
+            gap: 20px;
+        }
+
+        /* ── BACK BUTTON ── */
+        .back-btn {
+            position: fixed;
+            top: 24px;
+            left: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            padding: 10px 20px;
+            color: var(--muted);
+            font-size: .85rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all .3s ease;
+            backdrop-filter: blur(12px);
+            z-index: 10;
+            animation: slideDown .6s cubic-bezier(.34, 1.56, .64, 1) .8s both;
+        }
+
+        .back-btn:hover {
+            background: rgba(124, 58, 237, .15);
+            border-color: rgba(124, 58, 237, .4);
+            color: var(--text);
+            transform: translateX(-4px);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── CARD ── */
+        .card {
+            background: rgba(17, 17, 24, .85);
+            border: 1px solid rgba(124, 58, 237, .25);
+            border-radius: 28px;
+            padding: 40px 48px;
+            max-width: 860px;
+            width: 100%;
+            backdrop-filter: blur(24px);
+            position: relative;
+            overflow: hidden;
+            animation: popIn .7s cubic-bezier(.34, 1.56, .64, 1) .1s both;
+            display: flex;
+            gap: 48px;
+            align-items: center;
+        }
+
+        /* ── LEFT COLUMN ── */
+        .card-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 200px;
+            flex-shrink: 0;
+        }
+
+        /* ── RIGHT COLUMN ── */
+        .card-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(.6) translateY(40px);
+            }
+
+            60% {
+                transform: scale(1.04) translateY(-6px);
+            }
+
+            80% {
+                transform: scale(.98) translateY(2px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Card glow border */
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 29px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, .5), rgba(6, 182, 212, .4), rgba(245, 158, 11, .3));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity .4s;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        /* Corner blob inside card */
+        .card-blob {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--grad);
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: .1;
+            top: -100px;
+            right: -80px;
+            pointer-events: none;
+        }
+
+        /* ── AVATAR ── */
+        .avatar-wrap {
+            position: relative;
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 16px;
+            animation: popIn .6s cubic-bezier(.34, 1.56, .64, 1) .25s both;
+        }
+
+        .avatar-ring {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2), var(--accent3));
+            animation: spinRing 4s linear infinite;
+            z-index: 0;
+        }
+
+        .avatar-ring::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            border-radius: 50%;
+            background: var(--surface);
+        }
+
+        @keyframes spinRing {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .avatar {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        /* Fallback initials if no image */
+        .avatar-fallback {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-head);
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        /* ── LABEL ── */
+        .dev-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(124, 58, 237, .12);
+            border: 1px solid rgba(124, 58, 237, .3);
+            border-radius: 99px;
+            padding: 5px 14px;
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--accent2);
+            margin-bottom: 12px;
+            animation: popIn .6s cubic-bezier(.34, 1.56, .64, 1) .35s both;
+        }
+
+        .dev-label-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--accent2);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: .4;
+                transform: scale(.7);
+            }
+        }
+
+        /* ── NAME ── */
+        .dev-name {
+            font-family: var(--font-head);
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            background: linear-gradient(90deg, #fff 30%, var(--accent2) 60%, var(--accent1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: popIn .6s cubic-bezier(.34, 1.56, .64, 1) .4s both;
+        }
+
+        /* ── ROLE ── */
+        .dev-role {
+            font-size: .82rem;
+            color: var(--muted);
+            margin-bottom: 0;
+            animation: popIn .6s cubic-bezier(.34, 1.56, .64, 1) .45s both;
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(124, 58, 237, .4), transparent);
+            margin: 16px 0;
+            width: 100%;
+            animation: popIn .6s ease .5s both;
+        }
+
+        /* ── BIO ── */
+        .dev-bio {
+            font-size: .85rem;
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 16px;
+            text-align: left;
+            animation: popIn .6s ease .55s both;
+        }
+
+        .dev-bio strong {
+            color: var(--text);
+        }
+
+        /* ── STATS ── */
+        .stats {
+            display: flex;
+            justify-content: flex-start;
+            gap: 0;
+            margin-bottom: 16px;
+            animation: popIn .6s cubic-bezier(.34, 1.56, .64, 1) .6s both;
+        }
+
+        .stat-item {
+            flex: 1;
+            padding: 12px 8px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .stat-item:first-child {
+            border-left: 1px solid var(--border);
+            border-radius: 12px 0 0 12px;
+        }
+
+        .stat-item:last-child {
+            border-right: 1px solid var(--border);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .stat-val {
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            font-weight: 800;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-lbl {
+            font-size: .65rem;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        /* ── SOCIALS ── */
+        .socials {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            margin-bottom: 16px;
+            animation: popIn .6s cubic-bezier(.34, 1.56, .64, 1) .65s both;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            font-size: .95rem;
+            text-decoration: none;
+            transition: all .3s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        .social-icon:hover {
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            border-color: transparent;
+            color: #fff;
+            transform: translateY(-4px) scale(1.1);
+            box-shadow: 0 8px 24px rgba(124, 58, 237, .45);
+        }
+
+        /* ── CTA BUTTON ── */
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            color: #fff;
+            border-radius: 99px;
+            padding: 12px 28px;
+            font-size: .85rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: .03em;
+            transition: all .3s cubic-bezier(.34, 1.56, .64, 1);
+            box-shadow: 0 8px 32px rgba(124, 58, 237, .35);
+            animation: popIn .7s cubic-bezier(.34, 1.56, .64, 1) .7s both;
+            align-self: flex-start;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 16px 48px rgba(124, 58, 237, .55);
+        }
+
+        .cta-btn i {
+            font-size: .85rem;
+        }
+
+        /* ── FOOTER NOTE ── */
+        .footer-note {
+            font-size: .75rem;
+            color: rgba(136, 136, 170, .5);
+            animation: popIn .6s ease .85s both;
+        }
+
+        .footer-note a {
+            color: var(--accent2);
+            text-decoration: none;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 700px) {
+            .wrapper {
+                padding: 72px 16px 24px;
+                gap: 14px;
+                justify-content: flex-start;
+                min-height: 100vh;
+            }
+
+            .card {
+                flex-direction: column;
+                padding: 24px 20px;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .card-left {
+                min-width: unset;
+                width: 100%;
+            }
+
+            .avatar-wrap {
+                width: 72px;
+                height: 72px;
+                margin: 0 auto 10px;
+            }
+
+            .avatar-fallback {
+                font-size: 1.3rem;
+            }
+
+            .dev-label {
+                font-size: .62rem;
+                padding: 4px 12px;
+                margin-bottom: 8px;
+            }
+
+            .dev-name {
+                font-size: 1.5rem;
+                white-space: normal;
+                margin-bottom: 2px;
+            }
+
+            .dev-role {
+                font-size: .75rem;
+            }
+
+            .card-right {
+                width: 100%;
+            }
+
+            .dev-bio {
+                font-size: .8rem;
+                line-height: 1.6;
+                margin-bottom: 12px;
+                text-align: center;
+            }
+
+            .divider {
+                margin: 10px 0;
+            }
+
+            .stats {
+                justify-content: center;
+                margin-bottom: 12px;
+            }
+
+            .stat-item {
+                padding: 10px 6px;
+            }
+
+            .stat-val {
+                font-size: 1rem;
+            }
+
+            .stat-lbl {
+                font-size: .6rem;
+            }
+
+            .socials {
+                justify-content: center;
+                gap: 8px;
+                margin-bottom: 14px;
+            }
+
+            .social-icon {
+                width: 36px;
+                height: 36px;
+                font-size: .85rem;
+            }
+
+            .cta-btn {
+                align-self: center;
+                padding: 11px 24px;
+                font-size: .82rem;
+            }
+
+            .footer-note {
+                font-size: .68rem;
+                text-align: center;
+            }
+
+            .back-btn {
+                top: 16px;
+                left: 16px;
+                padding: 8px 14px;
+                font-size: .78rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background -->
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Back button -->
+    <a href="javascript:history.back()" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Portfolio
+    </a>
+
+    <!-- Main wrapper -->
+    <div class="wrapper">
+
+        <div class="card">
+            <div class="card-blob"></div>
+
+            <!-- LEFT: Avatar + identity -->
+            <div class="card-left">
+                <div class="avatar-wrap">
+                    <div class="avatar-ring"></div>
+                    <div class="avatar-fallback">NM</div>
+                </div>
+                <div class="dev-label">
+                    <span class="dev-label-dot"></span>
+                    Developer
+                </div>
+                <h1 class="dev-name">Noorul Muhsin</h1>
+                <p class="dev-role">Creative Developer &amp; UI Engineer · India 🇮🇳</p>
+            </div>
+
+            <!-- RIGHT: Bio + stats + links -->
+            <div class="card-right">
+                <!-- Bio -->
+                <p class="dev-bio">
+                    I craft <strong>premium digital experiences</strong> — from pixel‑perfect landing pages
+                    to complex full‑stack web apps. Obsessed with clean code, smooth animations,
+                    and designs that <strong>convert visitors into customers</strong>.
+                </p>
+
+                <div class="divider"></div>
+
+                <!-- Stats -->
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-val">1+</div>
+                        <div class="stat-lbl">Years Exp.</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-val">20+</div>
+                        <div class="stat-lbl">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-val">100%</div>
+                        <div class="stat-lbl">Satisfaction</div>
+                    </div>
+                </div>
+
+                <!-- Socials -->
+                <div class="socials">
+                    <a href="https://www.linkedin.com/in/noorul-muhsin-m-08681630b/" target="_blank" rel="noopener"
+                        class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://wa.me/918248513188" target="_blank" rel="noopener" class="social-icon"
+                        aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="mailto:noorulmuhsinbca@gmail.com" class="social-icon" aria-label="Email"><i
+                            class="fas fa-envelope"></i></a>
+                    <a href="tel:+918248513188" class="social-icon" aria-label="Call"><i class="fas fa-phone"></i></a>
+                    <a href="https://www.naukri.com/mnjuser/profile" target="_blank" rel="noopener" class="social-icon"
+                        aria-label="Naukri"><i class="fas fa-briefcase"></i></a>
+                </div>
+
+                <!-- CTA -->
+                <a href="index.html" class="cta-btn">
+                    <i class="fas fa-globe"></i>
+                    View Full Portfolio
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer note -->
+        <p class="footer-note">
+            This site was lovingly built by <a href="mailto:noorulmuhsinbca@gmail.com">Noorul Muhsin</a> ·
+            <a href="tel:+918248513188">+91 82485 13188</a>
+        </p>
+
+    </div>
+
+    <script>
+        // Generate floating particles
+        const container = document.getElementById('particles');
+        const count = 28;
+        for (let i = 0; i < count; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const size = Math.random() * 4 + 2;
+            const colors = ['rgba(124,58,237,.7)', 'rgba(6,182,212,.7)', 'rgba(245,158,11,.6)'];
+            p.style.cssText = `
+                left: ${Math.random() * 100}%;
+                width: ${size}px;
+                height: ${size}px;
+                background: ${colors[Math.floor(Math.random() * colors.length)]};
+                animation-duration: ${Math.random() * 10 + 8}s;
+                animation-delay: ${Math.random() * 10}s;
+            `;
+            container.appendChild(p);
+        }
+    </script>
+
+</body>
+
+</html>
