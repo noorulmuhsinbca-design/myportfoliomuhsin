@@ -1,6 +1,13 @@
 /* ─── ADMIN DASHBOARD LOGIC ────────────────────────────────────────── */
 const DEFAULT_PROJECTS = [
     {
+        title: "Billing Software for Optical",
+        description: "A user-friendly billing and inventory management system for optical shops with fast servers and real-time billing.",
+        link: "#",
+        image: "assets/project1.webp",
+        tags: ["React", "Web Dev"]
+    },
+    {
         title: "Guardian Pharmacy",
         description: "A full-stack pharmacy platform with real-time ordering, prescription management, and doctor booking.",
         link: "https://guardian-pharmacy.vercel.app/",

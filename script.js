@@ -231,6 +231,34 @@ if (hireMeBtn) {
 })();
 
 // ─── DYNAMIC PROJECTS RENDER ──────────────────────
+const PROJECTS_VERSION = 'v3';
+const DEFAULT_PROJECTS = [
+    {
+        title: "Billing Software for Optical",
+        description: "A user-friendly billing and inventory management system for optical shops with fast servers and real-time billing.",
+        link: "#",
+        image: "assets/project1.webp",
+        images: ["assets/project1.webp"],
+        tags: ["React", "Web Dev"]
+    },
+    {
+        title: "Guardian Pharmacy",
+        description: "A full-stack pharmacy platform with real-time ordering, prescription management, and doctor booking.",
+        link: "https://guardian-pharmacy.vercel.app/",
+        image: "assets/project1.webp",
+        images: ["assets/project1.webp"],
+        tags: ["React", "Tailwind", "Node.js"]
+    },
+    {
+        title: "Doctor Prescription Builder",
+        description: "A digital prescription platform for doctors — create, save, share and print prescriptions with live preview and patient management.",
+        link: "https://guardian-doctor-prescription.vercel.app/",
+        image: "assets/project2.webp",
+        images: ["assets/project2.webp"],
+        tags: ["React", "Firebase", "JavaScript"]
+    }
+];
+
 function formatImgUrl(url) {
     if (!url) return 'assets/project1.webp';
     if (typeof url === 'string') {
@@ -243,28 +271,18 @@ function renderPortfolioProjects() {
     const projectsGrid = document.querySelector('.projects-grid');
     if (!projectsGrid) return;
 
-    const DEFAULT_PROJECTS = [
-        {
-            title: "Guardian Pharmacy",
-            description: "A full-stack pharmacy platform with real-time ordering, prescription management, and doctor booking.",
-            link: "https://guardian-pharmacy.vercel.app/",
-            image: "assets/project1.webp",
-            tags: ["React", "Tailwind", "Node.js"]
-        },
-        {
-            title: "Doctor Prescription Builder",
-            description: "A digital prescription platform for doctors — create, save, share and print prescriptions with live preview and patient management.",
-            link: "https://guardian-doctor-prescription.vercel.app/",
-            image: "assets/project2.webp",
-            tags: ["React", "Firebase", "JavaScript"]
-        }
-    ];
 
     let projects = DEFAULT_PROJECTS;
     try {
+        const storedVersion = localStorage.getItem('portfolio_version');
         const stored = localStorage.getItem('portfolio_projects');
-        if (stored) {
+        if (stored && storedVersion === PROJECTS_VERSION) {
             projects = JSON.parse(stored);
+        } else {
+            // Seed with latest defaults (new version or fresh browser)
+            projects = DEFAULT_PROJECTS;
+            localStorage.setItem('portfolio_projects', JSON.stringify(DEFAULT_PROJECTS));
+            localStorage.setItem('portfolio_version', PROJECTS_VERSION);
         }
     } catch (e) {
         projects = DEFAULT_PROJECTS;
@@ -471,27 +489,12 @@ function renderProjectScrollStrip() {
     const track = document.getElementById('pssTrack');
     if (!track) return;
 
-    const DEFAULT_PROJECTS = [
-        {
-            title: "Guardian Pharmacy",
-            images: ["assets/project1.webp"],
-            image: "assets/project1.webp",
-            tags: ["React", "Tailwind", "Node.js"],
-            link: "https://guardian-pharmacy.vercel.app/"
-        },
-        {
-            title: "Doctor Prescription Builder",
-            images: ["assets/project2.webp"],
-            image: "assets/project2.webp",
-            tags: ["React", "Firebase"],
-            link: "https://guardian-doctor-prescription.vercel.app/"
-        }
-    ];
-
     let projects = DEFAULT_PROJECTS;
     try {
+        const storedVersion = localStorage.getItem('portfolio_version');
         const stored = localStorage.getItem('portfolio_projects');
-        if (stored) projects = JSON.parse(stored);
+        if (stored && storedVersion === PROJECTS_VERSION) projects = JSON.parse(stored);
+        else projects = DEFAULT_PROJECTS;
     } catch (e) {
         projects = DEFAULT_PROJECTS;
     }

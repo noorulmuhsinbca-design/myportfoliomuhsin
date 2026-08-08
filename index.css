@@ -2386,50 +2386,90 @@ body {
 
 /* ─── PROJECT SHOWCASE SCROLL STRIP ────────────────────────────────── */
 .project-scroll-strip {
-    padding: 70px 0 60px;
+    padding: 90px 0 80px;
     overflow: hidden;
     position: relative;
-    background: linear-gradient(180deg, transparent 0%, rgba(124, 58, 237, 0.04) 50%, transparent 100%);
+    background: linear-gradient(180deg,
+            transparent 0%,
+            rgba(99, 51, 220, 0.07) 30%,
+            rgba(6, 182, 212, 0.05) 70%,
+            transparent 100%);
+}
+
+/* Decorative top/bottom divider lines */
+.project-scroll-strip::before,
+.project-scroll-strip::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(124, 58, 237, 0.4), rgba(6, 182, 212, 0.4), transparent);
+}
+
+.project-scroll-strip::before {
+    top: 0;
+}
+
+.project-scroll-strip::after {
+    bottom: 0;
 }
 
 .pss-label {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 48px;
+    position: relative;
 }
 
 .pss-tag {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--accent);
-    background: rgba(124, 58, 237, 0.12);
-    border: 1px solid rgba(124, 58, 237, 0.3);
-    padding: 6px 18px;
+    color: var(--accent2);
+    background: rgba(6, 182, 212, 0.12);
+    border: 1px solid rgba(6, 182, 212, 0.35);
+    padding: 6px 20px;
     border-radius: 99px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+}
+
+.pss-tag::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent2);
+    animation: pulse 1.8s ease-in-out infinite;
 }
 
 .pss-label h3 {
     font-family: 'Syne', sans-serif;
-    font-size: clamp(1.4rem, 3vw, 2rem);
-    font-weight: 700;
-    color: var(--text);
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff 30%, rgba(6, 182, 212, 0.85) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0;
 }
 
 /* Fade edges using mask image */
 .pss-overflow-mask {
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
 }
 
 .pss-track {
     display: flex;
-    gap: 24px;
+    gap: 28px;
     width: max-content;
-    animation: pssScroll 32s linear infinite;
+    animation: pssScroll 40s linear infinite;
+    padding: 24px 0 32px;
 }
 
 .pss-track:hover {
@@ -2446,82 +2486,114 @@ body {
     }
 }
 
-/* Individual project card in strip */
+/* ── Individual project card in strip ── */
 .pss-card {
     position: relative;
-    width: 360px;
-    height: 240px;
-    border-radius: 20px;
+    width: 340px;
+    height: 220px;
+    border-radius: 22px;
     overflow: hidden;
     flex-shrink: 0;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(124, 58, 237, 0.25);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+        box-shadow 0.4s ease,
+        border-color 0.4s ease;
+    background: var(--surface);
+}
+
+/* Shimmer sweep on card */
+.pss-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.07) 50%,
+            transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.pss-card:hover::before {
+    transform: translateX(100%);
 }
 
 .pss-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 60px rgba(124, 58, 237, 0.25);
-    border-color: rgba(124, 58, 237, 0.4);
+    transform: translateY(-12px) scale(1.03);
+    box-shadow:
+        0 28px 56px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(124, 58, 237, 0.2),
+        0 0 80px rgba(6, 182, 212, 0.1);
+    border-color: rgba(124, 58, 237, 0.6);
 }
 
 .pss-card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    z-index: 1;
 }
 
 .pss-card:hover img {
-    transform: scale(1.06);
+    transform: scale(1.08);
 }
 
+/* Always-visible bottom info bar */
 .pss-card-info {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 16px 18px;
-    background: linear-gradient(to top, rgba(5, 5, 15, 0.95) 0%, transparent 100%);
-    transform: translateY(10px);
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-
-.pss-card:hover .pss-card-info {
-    opacity: 1;
+    padding: 28px 16px 14px;
+    background: linear-gradient(to top,
+            rgba(5, 5, 20, 0.97) 0%,
+            rgba(5, 5, 20, 0.7) 60%,
+            transparent 100%);
+    z-index: 2;
     transform: translateY(0);
+    opacity: 1;
+    transition: all 0.3s ease;
 }
 
 .pss-card-info h4 {
     font-family: 'Syne', sans-serif;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: #fff;
-    margin: 0 0 4px;
+    margin: 0 0 6px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    letter-spacing: 0.01em;
 }
 
 .pss-card-tags {
     display: flex;
-    gap: 6px;
+    gap: 5px;
     flex-wrap: wrap;
 }
 
 .pss-card-tags span {
-    font-size: 0.65rem;
-    font-weight: 600;
-    background: rgba(124, 58, 237, 0.4);
-    color: #d8b4fe;
-    padding: 2px 8px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background: rgba(6, 182, 212, 0.2);
+    color: #67e8f9;
+    padding: 3px 9px;
     border-radius: 99px;
-    border: 1px solid rgba(124, 58, 237, 0.35);
+    border: 1px solid rgba(6, 182, 212, 0.35);
+    text-transform: uppercase;
 }
 
-/* For single image placeholder cards */
+/* Placeholder card */
 .pss-card.pss-placeholder {
     background: linear-gradient(135deg, rgba(124, 58, 237, 0.12) 0%, rgba(6, 78, 59, 0.08) 100%);
     display: flex;
@@ -2538,6 +2610,10 @@ body {
     }
 
     .pss-label h3 {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
+    }
+
+    .project-scroll-strip {
+        padding: 60px 0 55px;
     }
 }
